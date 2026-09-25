@@ -1,12 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
+using JobApplicationTracker.Data;
 
-namespace JobApplicationTracker.Controllers;
-
-public class JobApplicationsController : Controller
+namespace JobApplicationTracker.Controllers
 {
-    // GET: /JobApplications  ->  Views/JobApplications/Index.cshtml
-    public IActionResult Index() => View();
+    public class JobApplicationsController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        public JobApplicationsController(ApplicationDbContext context)
+        {
+            _context = context;
 
-    // GET: /JobApplications/Create  ->  Views/JobApplications/Create.cshtml
-    public IActionResult Create() => View();
+        }
+
+        public IActionResult Index()
+        {
+            var applications = _context.JobApplications.ToList();
+            return View(applications);
+        }
+
+        public IActionResult Create() => View();
+
+    }
+
+
 }
