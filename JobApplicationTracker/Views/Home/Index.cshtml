@@ -9,7 +9,7 @@
         <div class="card mb-4 p-4 bg-light w-25 h-25">
             <span>@ViewData["Status"]</span>
             <span>@ViewData["ApplicationCount"]</span>
-            <p>Application@(ViewData["ApplicationCount"] != null && (int)ViewData["ApplicationCount"] != 1 ? "s" : "")
+            <p>Applications@* @(ViewData["ApplicationCount"] != null && (int)ViewData["ApplicationCount"] != 1 ? "s" : "") *@
             </p>
         </div>
     </section>
