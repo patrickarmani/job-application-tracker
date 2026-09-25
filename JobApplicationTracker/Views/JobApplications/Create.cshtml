@@ -1,31 +1,15 @@
+@model JobApplication
 @{
     ViewData["Title"] = "New Application";
 }
 
 <h1 class="h3 mb-4">New application</h1>
-<p class="text-muted">The form will go here.</p>
 
-<form action="">
-    <label for="company">Company</label>
-    <input type="text" id="company" name="company">
-    <label for="position">Position</label>
-    <input type="text" id="position" name="position">
-    <label for="jobPostingUrl">Job Posting URL</label>
-    <input type="text" id="jobPostingUrl" name="jobPostingUrl">
-    <label for="location">Location</label>
-    <input type="text" id="location" name="location">
-    <label for="workModel">Work Model</label>
-    <input type="radio" id="workModelOnSite" name="workModel" value="On-site">
-    <label for="workModelOnSite">On-site</label>
-    <input type="radio" id="workModelRemote" name="workModel" value="Remote">
-    <label for="workModelRemote">Remote</label>
-    <input type="radio" id="workModelHybrid" name="workModel" value="Hybrid">
-    <label for="workModelHybrid">Hybrid</label>
-    <label for="applicationDate">Application Date</label>
-    <input type="date" id="applicationDate" name="applicationDate">
-    <label for="status">Status</label>
-    <input type="text" id="status" name="status">
-    <label for="notes">Notes</label>
-    <textarea id="notes" name="notes"></textarea>
+<form asp-action="Create" method="post">
+    <partial name="_ApplicationForm" />
     <button type="submit">Submit</button>
 </form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
