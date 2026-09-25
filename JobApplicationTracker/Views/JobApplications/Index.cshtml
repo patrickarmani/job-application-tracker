@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Job Applications";
 }
+@model IEnumerable<JobApplicationTracker.Models.JobApplication>
 
 <div>
     <h1 class="display-5">Job Applications</h1>
@@ -9,11 +10,15 @@
     <div>
         @* I'll display all job applications here from the database *@
         <article class="card w-100">
-            <div class="card-body">
-                <h2>Company Name</h2>
-                <p>Job Position</p>
-                <p>Date Applied</p>
-            </div>
+            @foreach (var app in Model)
+            {
+                <div class="card-body">
+                    <h2>@app.Company</h2>
+                    <p>@app.Position</p>
+                    <p>@app.ApplicationDate.ToShortDateString()</p>
+                    <p>@app.Status</p>
+                </div>
+            }
         </article>
     </div>
 </div>
