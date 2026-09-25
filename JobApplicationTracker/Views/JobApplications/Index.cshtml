@@ -6,19 +6,39 @@
 <div>
     <h1 class="display-5">Job Applications</h1>
     @* This will be a filter to search by company or position *@
+    <form method="get" action="">
+        <input type="text" name="search" placeholder="Search by company or position">
+        <button type="submit">Filter</button>
+    </form>
     @* This will be an input for all statuses where the user can select a single status from the select dropdown *@
-    <div>
-        @* I'll display all job applications here from the database *@
-        <article class="card w-100">
-            @foreach (var app in Model)
-            {
-                <div class="card-body">
-                    <h2>@app.Company</h2>
-                    <p>@app.Position</p>
-                    <p>@app.ApplicationDate.ToShortDateString()</p>
-                    <p>@app.Status</p>
-                </div>
-            }
-        </article>
-    </div>
+    <form method="get" action="">
+        <select name="status">
+            <option value="">All statuses</option>
+            <option value="Applied">Applied</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Offered">Offered</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    @if (!Model.Any())
+    {
+        <p class="text-muted">No job applications found.</p>
+    }
+    else
+    {
+        <div>
+            <article class="card w-100">
+                @foreach (var app in Model)
+                {
+                    <div class="card-body">
+                        <h2>@app.Company</h2>
+                        <p>@app.Position</p>
+                        <p>@app.ApplicationDate.ToShortDateString()</p>
+                        <p>@app.Status</p>
+                    </div>
+                }
+            </article>
+        </div>
+    }
 </div>
