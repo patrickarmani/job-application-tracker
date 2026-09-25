@@ -32,10 +32,31 @@
                 @foreach (var app in Model)
                 {
                     <div class="card-body">
-                        <h2>@app.Company</h2>
-                        <p>@app.Position</p>
-                        <p>@app.ApplicationDate.ToShortDateString()</p>
-                        <p>@app.Status</p>
+                        <div>
+                            <h2>@app.Company</h2>
+                            <p>@app.Position</p>
+                            <p>@app.ApplicationDate.ToShortDateString()</p>
+                            <p>@app.Status</p>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="badge @(app.Status switch
+                                      {
+                                          ApplicationStatus.Applied => "bg-primary",
+                                          ApplicationStatus.Interview => "bg-info",
+                                          ApplicationStatus.Offer => "bg-success",
+                                          ApplicationStatus.Rejected => "bg-danger",
+                                          _ => "bg-secondary"
+                                      })">@app.Status</span>
+                                <a asp-action="Edit" asp-route-id="@app.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+
+                                <form asp-action="Delete" asp-route-id="@app.Id" method="post" class="d-inline"
+                                      onsubmit="return confirm('Delete @app.Company?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+
+                            </div>
+                        </div>
                     </div>
                 }
             </article>
