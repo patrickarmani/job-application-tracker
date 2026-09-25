@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<JobApplicationTracker.Models.JobApplication>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -14,7 +16,12 @@
         </div>
     </section>
     <section class="container mt-4">
-        <h2>Recent Applications</h2>
+        <div class="d-flex justify-content-between align-items-center">
+            <h2>Recent Applications</h2>
+            <a class="btn btn-primary" asp-controller="JobApplications" asp-action="Create">+ New
+                application</a>
+            </div>
+        </div>
 
         <div class="table-responsive">
             <table class="table table-striped table-hover align-middle table-bordered border-dark">
@@ -27,16 +34,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @* Recent applications will be dynamically populated here *@
-                    @* @foreach (var app in Model.Applications)
+                    @foreach (var app in Model)
                     {
                         <tr>
                             <td>@app.Company</td>
                             <td>@app.Position</td>
-                            <td>@app.DateApplied.ToShortDateString()</td>
+                            <td>@app.ApplicationDate.ToShortDateString()</td>
                             <td>@app.Status</td>
                         </tr>
-                    } *@
+                    }
                 </tbody>
             </table>
         </div>
