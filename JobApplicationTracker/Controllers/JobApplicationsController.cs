@@ -18,6 +18,8 @@ namespace JobApplicationTracker.Controllers
             return View(applications);
         }
 
+        public IActionResult Create() => View();
+
     }
 
 

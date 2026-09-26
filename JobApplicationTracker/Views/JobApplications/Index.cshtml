@@ -1,0 +1,65 @@
+@{
+    ViewData["Title"] = "Job Applications";
+}
+@model IEnumerable<JobApplicationTracker.Models.JobApplication>
+
+<div>
+    <h1 class="display-5">Job Applications</h1>
+    @* This will be a filter to search by company or position *@
+    <form method="get" action="">
+        <input type="text" name="search" placeholder="Search by company or position">
+        <button type="submit">Filter</button>
+    </form>
+    @* This will be an input for all statuses where the user can select a single status from the select dropdown *@
+    <form method="get" action="">
+        <select name="status">
+            <option value="">All statuses</option>
+            <option value="Applied">Applied</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Offered">Offered</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+        <button type="submit">Filter</button>
+    </form>
+    @if (!Model.Any())
+    {
+        <p class="text-muted">No job applications found.</p>
+    }
+    else
+    {
+        <div>
+            <article class="card w-100">
+                @foreach (var app in Model)
+                {
+                    <div class="card-body">
+                        <div>
+                            <h2>@app.Company</h2>
+                            <p>@app.Position</p>
+                            <p>@app.ApplicationDate.ToShortDateString()</p>
+                            <p>@app.Status</p>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="badge @(app.Status switch
+                                      {
+                                          ApplicationStatus.Applied => "bg-primary",
+                                          ApplicationStatus.Interview => "bg-info",
+                                          ApplicationStatus.Offer => "bg-success",
+                                          ApplicationStatus.Rejected => "bg-danger",
+                                          _ => "bg-secondary"
+                                      })">@app.Status</span>
+                                <a asp-action="Edit" asp-route-id="@app.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+
+                                <form asp-action="Delete" asp-route-id="@app.Id" method="post" class="d-inline"
+                                      onsubmit="return confirm('Delete @app.Company?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </article>
+        </div>
+    }
+</div>

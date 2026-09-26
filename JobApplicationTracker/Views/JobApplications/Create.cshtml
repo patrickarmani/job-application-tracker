@@ -1,0 +1,15 @@
+@model JobApplication
+@{
+    ViewData["Title"] = "New Application";
+}
+
+<h1 class="h3 mb-4">New application</h1>
+
+<form asp-action="Create" method="post">
+    <partial name="_ApplicationForm" />
+    <button type="submit">Submit</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

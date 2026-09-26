@@ -1,19 +1,21 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using JobApplicationTracker.Models;
+using JobApplicationTracker.Data;
 
 namespace JobApplicationTracker.Controllers;
 
 public class HomeController : Controller
 {
+    private readonly ApplicationDbContext _context;
+    public HomeController(ApplicationDbContext context)
+    {
+        _context = context;
+    }
     public IActionResult Index()
     {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
+        var applications = _context.JobApplications.ToList();
+        return View(applications);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

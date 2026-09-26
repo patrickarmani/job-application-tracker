@@ -1,0 +1,17 @@
+@model JobApplication
+@{
+    ViewData["Title"] = "Edit Application";
+}
+
+<h1 class="h3 mb-4">Edit application</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <partial name="_ApplicationForm" />
+    <button type="submit">Save</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
