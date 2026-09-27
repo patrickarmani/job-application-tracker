@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using JobApplicationTracker.Data;
+using JobApplicationTracker.Models;
 
 namespace JobApplicationTracker.Controllers
 {
@@ -19,6 +20,17 @@ namespace JobApplicationTracker.Controllers
         }
 
         public IActionResult Create() => View();
+        [HttpPost]
+        public IActionResult Create(JobApplication application)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(application);
+            }
+            _context.JobApplications.Add(application);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 
