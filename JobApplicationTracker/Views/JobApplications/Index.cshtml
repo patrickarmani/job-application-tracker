@@ -62,10 +62,8 @@
                                             <a asp-action="Details" asp-route-id="@app.Id"
                                                class="btn btn-sm btn-outline-secondary">View</a>
                                             <a asp-action="Edit" asp-route-id="@app.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                            <form asp-action="Delete" asp-route-id="@app.Id" method="post" class="d-inline"
-                                                  onsubmit="return confirm('Delete @app.Company?');">
-                                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                                            </form>
+                                            <a asp-action="Delete" asp-route-id="@app.Id"
+                                               class="btn btn-sm btn-outline-danger">Delete</a>
                                         </div>
 
                                     </div>
