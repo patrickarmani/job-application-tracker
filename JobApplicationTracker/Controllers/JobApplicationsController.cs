@@ -33,6 +33,61 @@ namespace JobApplicationTracker.Controllers
             }
             return View(application);
         }
+        
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var application = _context.JobApplications.Find(id);
+
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            return View(application);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, JobApplication application)
+        {
+            if (id != application.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(application);
+            }
+
+            // Retrieve the existing application so only permitted fields are updated
+            var existingApplication = _context.JobApplications.Find(id);
+            if (existingApplication == null)
+            {
+                return NotFound();
+            }
+            // Update only the fields that are allowed to be changed    
+
+            existingApplication.Company = application.Company;
+            existingApplication.Position = application.Position;
+            existingApplication.Location = application.Location;
+            existingApplication.ApplicationDate = application.ApplicationDate;
+            existingApplication.Status = application.Status;
+            existingApplication.WorkModel = application.WorkModel;
+            existingApplication.JobUrl = application.JobUrl;
+            existingApplication.Notes = application.Notes;
+
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
         public IActionResult Create() => View();
         [HttpPost]
         public IActionResult Create(JobApplication application)
