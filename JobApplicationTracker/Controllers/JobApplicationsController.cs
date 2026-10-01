@@ -112,6 +112,7 @@ namespace JobApplicationTracker.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             var application = _context.JobApplications.FirstOrDefault(a => a.Id == id);
