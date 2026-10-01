@@ -19,9 +19,23 @@ namespace JobApplicationTracker.Controllers
             return View(applications);
         }
 
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var application = _context.JobApplications
+                .FirstOrDefault(a => a.Id == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+            return View(application);
+        }
+        
         public IActionResult Edit(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
