@@ -7,17 +7,20 @@
     <h1 class="display-5 secondary-text fw-medium">Job Applications</h1>
     @* This will be a filter to search by company or position *@
     <form method="get" action="" class="input-group mb-3" style="max-width: 500px;">
-        <input type="text" name="search" placeholder="Search by company or position" class="form-control border-gray">
+        <input type="text" name="search" placeholder="Search by company or position" class="border p-2"
+               style="flex: 1;">
         @* Remove border *@
         <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Search</button>
     </form>
     @* This will be an input for all statuses where the user can select a single status from the select dropdown *@
-    <form method="get" action="" class="input-group mb-3" style="max-width: 500px;">
-        <select name="status" class="form-select border-gray">
+    <form method="get" action="" class="input-group mb-3 d-flex" style="max-width: 500px;">
+        @* Make the option tags have a smaller width or limited width *@
+        <select name="status" class="border p-2" style="flex: 1;">
             <option value="">All statuses</option>
             <option value="Applied">Applied</option>
-            <option value="Interviewing">Interviewing</option>
-            <option value="Offered">Offered</option>
+            <option value="Interview">Interview</option>
+            <option value="Offer">Offer</option>
+            <option value="Withdrawn">Withdrawn</option>
             <option value="Rejected">Rejected</option>
         </select>
         <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Filter</button>
@@ -30,7 +33,7 @@
     {
         <div>
             @* Apply flex layout and spacing with justified content and between items *@
-            <article class="w-100% d-flex flex-column gap-3">
+            <article class="d-flex flex-column gap-3">
                 @foreach (var app in Model)
                 {
                     <div class="d-flex justify-content-between gap-3 application-card">
@@ -48,6 +51,7 @@
                                               ApplicationStatus.Interview => "bg-info",
                                               ApplicationStatus.Offer => "bg-success",
                                               ApplicationStatus.Rejected => "bg-danger",
+                                              ApplicationStatus.Withdrawn => "bg-warning",
                                               _ => "bg-secondary"
                                           })">@app.Status</span>
                                     <div class="d-flex gap-2">

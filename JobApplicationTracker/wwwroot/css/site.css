@@ -7,7 +7,7 @@
   --border-color-darker: #adb5bd;
   --background-color: #f8f9fa;
   --primary-color: #212529;
-  --transparent-color: rgba(0, 0, 0, 0);
+  --transparent: rgba(0, 0, 0, 0);
 }
 
 body {
@@ -38,16 +38,25 @@ body {
 }
 
 .table-border {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--secondary-color);
+}
+
+.table-blue,
+.table-blue thead,
+.table-blue tbody,
+.table-blue tr,
+.table-blue th,
+.table-blue td {
+  border-color: var(--black);
+}
+
+.table-blue thead {
+  --bs-table-color: var(--white);
+  --bs-table-bg: var(--secondary-color);
 }
 
 .border-gray {
   border-color: var(--border-color);
-  border-width: 2px;
-}
-
-.border-secondary {
-  border-color: var(--secondary-color);
   border-width: 2px;
 }
 
@@ -58,12 +67,17 @@ body {
 }
 
 .submit-button {
-  border: 1px solid var(--transparent-color);
+  border: 1px solid var(--transparent);
   background-color: var(--secondary-color);
   color: var(--white);
   border-radius: 0.75rem;
   font-weight: 500;
   padding: 0.5rem 1rem;
+}
+
+.view-all-link {
+  color: var(--secondary-color);
+  text-decoration: none;
 }
 
 .form-action-button:hover {
@@ -75,6 +89,13 @@ body {
   background-color: var(--background-color);
   color: var(--secondary-color);
   border-color: var(--secondary-color);
+}
+
+.view-all-link:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 2px;
 }
 
 .application-card {
