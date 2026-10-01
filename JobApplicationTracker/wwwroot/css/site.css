@@ -89,7 +89,7 @@ body {
   flex-direction: column;
   background-color: var(--white);
   border: 1px solid var(--border-color-darker);
-  border-radius: 0.25rem;
+  border-radius: 0.50rem;
   padding: 1rem;
 }
 
