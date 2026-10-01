@@ -4,24 +4,23 @@
 @model IEnumerable<JobApplicationTracker.Models.JobApplication>
 
 <div>
-    <h1 class="display-5">Job Applications</h1>
+    <h1 class="display-5 secondary-text fw-medium">Job Applications</h1>
     @* This will be a filter to search by company or position *@
     <form method="get" action="" class="input-group mb-3" style="max-width: 500px;">
-        <input type="text" name="search" placeholder="Search by company or position"
-               class="form-control border-primary">
+        <input type="text" name="search" placeholder="Search by company or position" class="form-control border-gray">
         @* Remove border *@
-        <button type="submit" class="btn btn-outline-primary">Search</button>
+        <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Search</button>
     </form>
     @* This will be an input for all statuses where the user can select a single status from the select dropdown *@
     <form method="get" action="" class="input-group mb-3" style="max-width: 500px;">
-        <select name="status" class="form-select border-primary">
+        <select name="status" class="form-select border-gray">
             <option value="">All statuses</option>
             <option value="Applied">Applied</option>
             <option value="Interviewing">Interviewing</option>
             <option value="Offered">Offered</option>
             <option value="Rejected">Rejected</option>
         </select>
-        <button type="submit" class="btn btn-outline-primary">Filter</button>
+        <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Filter</button>
     </form>
     @if (!Model.Any())
     {
@@ -31,38 +30,39 @@
     {
         <div>
             @* Apply flex layout and spacing with justified content and between items *@
-            <article class="card w-100">
+            <article class="w-100% d-flex flex-column gap-3">
                 @foreach (var app in Model)
                 {
-                    <div class="d-flex gap-3 justify-content-between p-3">
+                    <div class="d-flex justify-content-between gap-3 application-card">
                         <div>
-                            <h2 class="mb-2">@app.Company</h2>
-                            <p class="mb-0">@app.Position</p>
-                            <p class="mb-0">@app.ApplicationDate.ToShortDateString()</p>
-                        </div>
-                        <div class="d-flex flex-column h-100%">
-                            <div class="d-flex flex-column gap-2 flex-grow-1">
-                                <span class="badge pt-2 pb-2 px-3 mb-auto fs-5 fw-normal @(app.Status switch
-                                      {
-                                          ApplicationStatus.Applied => "bg-primary",
-                                          ApplicationStatus.Interview => "bg-info",
-                                          ApplicationStatus.Offer => "bg-success",
-                                          ApplicationStatus.Rejected => "bg-danger",
-                                          _ => "bg-secondary"
-                                      })">@app.Status</span>
-                                <div class="d-flex gap-2">
-                                    <a asp-action="Edit" asp-route-id="@app.Id" class="btn btn-sm btn-outline-primary">Edit</a>
-                                    <form asp-action="Delete" asp-route-id="@app.Id" method="post" class="d-inline"
-                                          onsubmit="return confirm('Delete @app.Company?');">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                                    </form>
-                                </div>
+                            <h2 class="fw-medium mb-2 secondary-text underlined-text">@app.Company</h2>
+                            <p class="fw-bold mb-0">Position: <span class="fw-normal">@app.Position</span></p>
+                            <p class="fw-bold mb-0">Date Applied: <span
+                                class="fw-normal">@app.ApplicationDate.ToShortDateString()</span></p>
+                            </div>
+                            <div class="d-flex flex-column h-100%">
+                                <div class="d-flex flex-column gap-2 flex-grow-1">
+                                    <span class="badge pt-2 pb-2 px-3 mb-auto fs-5 fw-normal @(app.Status switch
+                                          {
+                                              ApplicationStatus.Applied => "bg-primary",
+                                              ApplicationStatus.Interview => "bg-info",
+                                              ApplicationStatus.Offer => "bg-success",
+                                              ApplicationStatus.Rejected => "bg-danger",
+                                              _ => "bg-secondary"
+                                          })">@app.Status</span>
+                                    <div class="d-flex gap-2">
+                                        <a asp-action="Edit" asp-route-id="@app.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                        <form asp-action="Delete" asp-route-id="@app.Id" method="post" class="d-inline"
+                                              onsubmit="return confirm('Delete @app.Company?');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                        </form>
+                                    </div>
 
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
-            </article>
-        </div>
-    }
-</div>
+                    }
+                </article>
+            </div>
+        }
+    </div>
