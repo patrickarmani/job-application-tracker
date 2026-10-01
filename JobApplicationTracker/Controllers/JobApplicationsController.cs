@@ -33,7 +33,7 @@ namespace JobApplicationTracker.Controllers
             }
             return View(application);
         }
-        
+
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -101,7 +101,30 @@ namespace JobApplicationTracker.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-    }
+        public IActionResult Delete(int id)
+        {
+            var application = _context.JobApplications.FirstOrDefault(a => a.Id == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+            return View(application);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var application = _context.JobApplications.FirstOrDefault(a => a.Id == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+            _context.JobApplications.Remove(application);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+    }
 
 }

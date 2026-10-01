@@ -1,15 +1,13 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+:root {
+  --muted-text-color: #6c757d;
+  --white: #ffffff;
+  --black: #000000;
+  --secondary-color: #0D6EFD;
+  --border-color: #dee2e6;
+  --border-color-darker: #adb5bd;
+  --background-color: #f8f9fa;
+  --primary-color: #212529;
+  --transparent: rgba(0, 0, 0, 0);
 }
 
 html {
@@ -18,14 +16,119 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  background-color: var(--background-color);
+  color: var(--primary-color);
+  margin-bottom: 7rem;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.muted-text {
+  color: var(--muted-text-color);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.secondary-text {
+  color: var(--secondary-color);
+}
+
+.underlined-text {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 2px;
+}
+
+.card-badge-text {
+  background-color: var(--background-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  align-self: center;
+}
+
+.table-border {
+  border: 1px solid var(--secondary-color);
+}
+
+.table-blue,
+.table-blue thead,
+.table-blue tbody,
+.table-blue tr,
+.table-blue th,
+.table-blue td {
+  border-color: var(--black);
+}
+
+.table-blue thead {
+  --bs-table-color: var(--white);
+  --bs-table-bg: var(--secondary-color);
+}
+
+.border-gray {
+  border-color: var(--border-color);
+  border-width: 2px;
+}
+
+.form-action-button {
+  border: 2px solid var(--border-color);
+  background-color: var(--background-color);
+  border-radius: 0.50rem;
+}
+
+.submit-button {
+  border: 1px solid var(--transparent);
+  background-color: var(--secondary-color);
+  color: var(--white);
+  border-radius: 0.75rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+}
+
+.view-all-link {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+.form-action-button:hover {
+  background-color: var(--secondary-color);
+  color: var(--white);
+}
+
+.submit-button:hover {
+  background-color: var(--background-color);
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.view-all-link:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 2px;
+}
+
+.application-card {
+  background-color: var(--white);
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  border: 1px solid var(--border-color-darker);
+  border-radius: 0.50rem;
+  padding: 1rem;
+}
+
+.navbar .nav-link.active {
+  text-decoration: underline;
+  text-decoration-color: #fff;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.4em;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
 }
