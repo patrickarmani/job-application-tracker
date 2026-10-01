@@ -33,7 +33,7 @@ namespace JobApplicationTracker.Controllers
             }
             return View(application);
         }
-        
+
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -97,42 +97,6 @@ namespace JobApplicationTracker.Controllers
                 return View(application);
             }
             _context.JobApplications.Add(application);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-
-        public IActionResult Details(int id)
-        {
-            var application = _context.JobApplications.FirstOrDefault(a => a.Id == id);
-            if (application == null)
-            {
-                return NotFound();
-            }
-            return View(application);
-        }
-
-        public IActionResult Edit(int id)
-        {
-            var application = _context.JobApplications.FirstOrDefault(a => a.Id == id);
-            if (application == null)
-            {
-                return NotFound();
-            }
-            return View(application);
-        }
-
-        [HttpPost]
-        public IActionResult Edit(int id, JobApplication application)
-        {
-            if (id != application.Id)
-            {
-                return BadRequest();
-            }
-            if (!ModelState.IsValid)
-            {
-                return View(application);
-            }
-            _context.JobApplications.Update(application);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
