@@ -1,7 +1,15 @@
 @{
     ViewData["Title"] = "Job Applications";
 }
+
 @model IEnumerable<JobApplicationTracker.Models.JobApplication>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
 
 <div>
     <h1 class="display-5 secondary-text fw-medium">Applications</h1>
