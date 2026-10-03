@@ -101,8 +101,13 @@ namespace JobApplicationTracker.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            
             var application = _context.JobApplications.FirstOrDefault(a => a.Id == id);
             if (application == null)
             {
