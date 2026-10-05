@@ -52,6 +52,17 @@ so each person has their own data.
 
 Wireframes are in [`docs/JobTracker-Wireframes.pdf`](docs/JobTracker-Wireframes.pdf).
 
+### Visual identity
+
+The application uses a consistent, responsive visual style based on Bootstrap 5.3.
+
+- **Primary color:** blue, used for primary actions and important interface elements.
+- **Secondary color:** dark tones, used for navigation, headings, and supporting elements.
+- **Status badges:** each application status has a distinct visual treatment for Applied, Interview, Offer, Rejected, and Withdrawn.
+- **Forms and buttons:** consistent styling is used across Create, Edit, Details, and Delete views.
+- **Application cards:** applications use a consistent card layout for readability and quick status identification.
+- **Responsive design:** the interface is designed to work on both desktop and mobile screen sizes.
+
 ## Teammates
 
 - [Patrick Armani](https://github.com/patrickarmani)
