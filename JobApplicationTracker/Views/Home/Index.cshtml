@@ -49,8 +49,9 @@
                             <th scope="col">Status</th>
                         </tr>
                     </thead>
+                    @* Only display the last 4 *@
                     <tbody>
-                        @foreach (var app in Model)
+                        @foreach (var app in Model.OrderByDescending(a => a.ApplicationDate).Take(4))
                         {
                             <tr>
                                 <td>@app.Company</td>
