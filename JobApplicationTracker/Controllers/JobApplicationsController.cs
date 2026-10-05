@@ -84,6 +84,8 @@ namespace JobApplicationTracker.Controllers
 
             _context.SaveChanges();
 
+            TempData["SuccessMessage"] = $"Application \"{application.Company}\" updated successfully."; // Set a success message in TempData to display after redirect
+
             return RedirectToAction(nameof(Index));
 
         }
@@ -98,6 +100,10 @@ namespace JobApplicationTracker.Controllers
             }
             _context.JobApplications.Add(application);
             _context.SaveChanges();
+
+
+            TempData["SuccessMessage"] = $"Application \"{application.Company}\" created successfully."; // Set a success message in TempData to display after redirect  
+
             return RedirectToAction(nameof(Index));
         }
 
@@ -107,7 +113,7 @@ namespace JobApplicationTracker.Controllers
             {
                 return NotFound();
             }
-            
+
             var application = _context.JobApplications.FirstOrDefault(a => a.Id == id);
             if (application == null)
             {
@@ -127,6 +133,8 @@ namespace JobApplicationTracker.Controllers
             }
             _context.JobApplications.Remove(application);
             _context.SaveChanges();
+
+            TempData["SuccessMessage"] = $"Application \"{application.Company}\" deleted successfully."; // Set a success message in TempData to display after redirect> The message includes the company name of the deleted application for better user feedback.
             return RedirectToAction(nameof(Index));
         }
 
