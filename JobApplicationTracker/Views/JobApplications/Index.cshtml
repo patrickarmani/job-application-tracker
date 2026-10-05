@@ -25,11 +25,10 @@
         @* Make the option tags have a smaller width or limited width *@
         <select name="status" class="border p-2" style="flex: 1;">
             <option value="">All statuses</option>
-            <option value="Applied">Applied</option>
-            <option value="Interview">Interview</option>
-            <option value="Offer">Offer</option>
-            <option value="Withdrawn">Withdrawn</option>
-            <option value="Rejected">Rejected</option>
+            @foreach (var s in Enum.GetValues<ApplicationStatus>())
+            {
+                <option value="@s">@s</option>
+            }
         </select>
         <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Filter</button>
     </form>
@@ -57,15 +56,9 @@
                                 <div class="d-flex flex-column h-100%">
                                     <div class="d-flex flex-column gap-2 flex-grow-1">
                                         @* Make this span shrink to fit its content *@
-                                        <span class="badge pt-2 pb-2 px-3 mb-auto fs-5 fw-normal align-self-center @(app.Status switch
-                                              {
-                                                  ApplicationStatus.Applied => "bg-primary",
-                                                  ApplicationStatus.Interview => "bg-info",
-                                                  ApplicationStatus.Offer => "bg-success",
-                                                  ApplicationStatus.Rejected => "bg-danger",
-                                                  ApplicationStatus.Withdrawn => "bg-warning",
-                                                  _ => "bg-secondary"
-                                              })">@app.Status</span>
+                                        <div class="mb-auto align-self-center fs-5">
+                                            <partial name="_StatusBadge" model="app.Status" />
+                                        </div>
                                         <div class="d-flex gap-2">
                                             <a asp-action="Details" asp-route-id="@app.Id"
                                                class="btn btn-sm btn-outline-secondary">View</a>

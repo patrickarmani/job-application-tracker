@@ -1,0 +1,11 @@
+@model ApplicationStatus
+
+<span class="badge pt-2 pb-2 px-3 fw-normal @(Model switch
+      {
+          ApplicationStatus.Applied => "bg-primary",
+          ApplicationStatus.Interview => "bg-info",
+          ApplicationStatus.Offer => "bg-success",
+          ApplicationStatus.Rejected => "bg-danger",
+          ApplicationStatus.Withdrawn => "bg-warning",
+          _ => "bg-secondary"
+      })">@Model</span>
