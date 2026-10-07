@@ -13,29 +13,34 @@
 
 <div>
     <h1 class="display-5 secondary-text fw-medium">Applications</h1>
-    @* This will be a filter to search by company or position *@
-    <form method="get" action="" class="input-group mb-3" style="max-width: 500px;">
+    @* Search by company/position and filter by status, submitted together *@
+    <form method="get" action="" class="d-flex flex-wrap gap-2 mb-5" style="max-width: 700px;">
         <input type="text" name="search" placeholder="Search by company or position" class="border p-2"
-               style="flex: 1;">
-        @* Remove border *@
-        <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Search</button>
-    </form>
-    @* This will be an input for all statuses where the user can select a single status from the select dropdown *@
-    <form method="get" action="" class="input-group mb-5 d-flex" style="max-width: 500px;">
-        @* Make the option tags have a smaller width or limited width *@
-        <select name="status" class="border p-2" style="flex: 1;">
+               style="flex: 2; min-width: 200px;" value="@Context.Request.Query["search"]" />
+
+        <select name="status" class="border p-2" style="flex: 1; min-width: 150px;">
             <option value="">All statuses</option>
             @foreach (var s in Enum.GetValues<ApplicationStatus>())
             {
-                <option value="@s">@s</option>
+                <option value="@s" selected="@(Context.Request.Query["status"] == s.ToString())">@s</option>
             }
         </select>
-        <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Filter</button>
+
+        <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Apply</button>
+        <a asp-action="Index"
+           class="form-action-button border-gray secondary-text fw-medium text-decoration-none d-inline-block py-2 px-3">
+            Clear
+        </a>
+
     </form>
+    
     @if (!Model.Any())
     {
-        <p class="text-muted">No job applications found.</p>
+        var isFiltered = !string.IsNullOrEmpty(Context.Request.Query["search"])
+                         || !string.IsNullOrEmpty(Context.Request.Query["status"]);
+        <partial name="_EmptyState" model="isFiltered" />
     }
+
     else
     {
         <div class="position-relative">
