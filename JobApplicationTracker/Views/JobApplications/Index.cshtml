@@ -15,8 +15,8 @@
     <h1 class="display-5 secondary-text fw-medium">Applications</h1>
     @* Search by company/position and filter by status, submitted together *@
     <form method="get" action="" class="d-flex flex-wrap gap-2 mb-5" style="max-width: 700px;">
-        <input type="text" name="search" placeholder="Search by company or position" class="border p-2"
-               style="flex: 2; min-width: 200px;" value="@Context.Request.Query["search"]" />
+        <input type="text" name="searchTerm" placeholder="Search by company or position" class="border p-2"
+               style="flex: 2; min-width: 200px;" value="@Context.Request.Query["searchTerm"]" />
 
         <select name="status" class="border p-2" style="flex: 1; min-width: 150px;">
             <option value="">All statuses</option>
@@ -36,7 +36,7 @@
     
     @if (!Model.Any())
     {
-        var isFiltered = !string.IsNullOrEmpty(Context.Request.Query["search"])
+        var isFiltered = !string.IsNullOrEmpty(Context.Request.Query["searchTerm"])
                          || !string.IsNullOrEmpty(Context.Request.Query["status"]);
         <partial name="_EmptyState" model="isFiltered" />
     }
