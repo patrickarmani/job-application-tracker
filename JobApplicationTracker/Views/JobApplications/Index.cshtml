@@ -15,8 +15,8 @@
     <h1 class="display-5 secondary-text fw-medium">Applications</h1>
     @* This will be a filter to search by company or position *@
     <form method="get" action="" class="input-group mb-3" style="max-width: 500px;">
-        <input type="text" name="search" placeholder="Search by company or position" class="border p-2"
-               style="flex: 1;">
+        <input type="text" name="searchTerm" value="@ViewData["SearchTerm"]" placeholder="Search by company or position"
+               class="border p-2" style="flex: 1;">
         @* Remove border *@
         <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Search</button>
     </form>

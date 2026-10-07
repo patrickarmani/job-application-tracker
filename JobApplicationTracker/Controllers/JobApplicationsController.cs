@@ -13,9 +13,16 @@ namespace JobApplicationTracker.Controllers
 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? searchTerm)
         {
-            var applications = _context.JobApplications.ToList();
+            var applications = _context.JobApplications.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                applications = applications.Where(a => a.Company.Contains(searchTerm) || a.Position.Contains(searchTerm));// Filter applications based on the search term, checking both the Company and Position fields for matches
+            }
+
+            ViewData["SearchTerm"] = searchTerm;// Store the search term in ViewData to retain it in the view after a search is performed   
             return View(applications);
         }
 
