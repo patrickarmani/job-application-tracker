@@ -24,9 +24,20 @@ Built for CSE499 Senior Project.
 | Data model + database (SQLite, EF Core migrations) | ✅ Done                     |
 | Create, view, edit, delete applications            | ✅ Done                     |
 | Dashboard with status counts                       | ✅ Done                     |
-| Responsive layout (Bootstrap)                      | 🚧 In progress              |
+| Responsive layout (Bootstrap)                      | ✅ Done                     |
 | Search by company/position + filter by status      | 🚧 UI done, backend pending |
 | TODO: next planned features                        | ⬜ Not started              |
+
+## CRUD workflow
+
+The application provides a complete CRUD workflow for job applications:
+
+1. **Create** — add a new job application with company, position, location, work model, application date, status, job URL, and notes.
+2. **Read** — view saved applications in the applications list and open the Details page for a specific application.
+3. **Update** — edit an existing application, including its current application status.
+4. **Delete** — remove an application through a confirmation page to prevent accidental deletion.
+
+The workflow uses ASP.NET Core MVC, Entity Framework Core, and SQLite for data persistence.
 
 ## Tech stack
 
