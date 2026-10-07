@@ -39,6 +39,17 @@ The application provides a complete CRUD workflow for job applications:
 
 The workflow uses ASP.NET Core MVC, Entity Framework Core, and SQLite for data persistence.
 
+## Key pull requests
+
+| PR                                                                      | Description                                                      | Author  |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------- | ------- |
+| [#15](https://github.com/patrickarmani/job-application-tracker/pull/15) | Backend for listing job applications                             | Patrick |
+| [#19](https://github.com/patrickarmani/job-application-tracker/pull/19) | First frontend pass: layout, dashboard, and application cards    | Ovinson |
+| [#20](https://github.com/patrickarmani/job-application-tracker/pull/20) | Backend for creating job applications                            | Patrick |
+| [#29](https://github.com/patrickarmani/job-application-tracker/pull/29) | Editing job applications                                         | Patrick |
+| [#33](https://github.com/patrickarmani/job-application-tracker/pull/33) | Success and error feedback messages for create, edit, and delete | Patrick |
+| [#34](https://github.com/patrickarmani/job-application-tracker/pull/34) | Shared status badge partial for consistent status display        | Ovinson |
+
 ## Tech stack
 
 - ASP.NET Core MVC (.NET 10)
