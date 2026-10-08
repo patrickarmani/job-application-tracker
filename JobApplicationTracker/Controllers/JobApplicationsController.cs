@@ -19,11 +19,15 @@ namespace JobApplicationTracker.Controllers
 
             if (!string.IsNullOrWhiteSpace(searchTerm))
             {
-                applications = applications.Where(a => a.Company.Contains(searchTerm) || a.Position.Contains(searchTerm));// Filter applications based on the search term, checking both the Company and Position fields for matches
+                var term = searchTerm.Trim().ToLower();
+                applications = applications.Where(a =>
+                    a.Company.ToLower().Contains(term) ||
+                    a.Position.ToLower().Contains(term));
             }
 
+
             ViewData["SearchTerm"] = searchTerm;// Store the search term in ViewData to retain it in the view after a search is performed   
-            return View(applications);
+            return View(applications.ToList()); // Convert the IQueryable to a List before passing it to the view
         }
 
         public IActionResult Details(int? id)
