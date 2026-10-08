@@ -8,7 +8,7 @@
     <h1 class="display-6 secondary-text fw-medium mb-0">Dashboard - Welcome</h1>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <p class="text-muted mb-0">You have @Model.Count() application@(Model.Count() != 1 ? "s" : "")</p>
-        <a class="btn btn-primary" asp-controller="JobApplications" asp-action="Create">+ New
+        <a class="btn btn-primary py-1 px-2" asp-controller="JobApplications" asp-action="Create">+ New
             application</a>
         </div>
     </div>
@@ -30,8 +30,9 @@
     </section>
     <section class="mt-4">
         <div class="d-flex justify-content-between align-items-center">
-            <h2 class="mb-3">Recent Applications</h2>
-            <a class="fw-medium fs-5 view-all-link" asp-controller="JobApplications" asp-action="Index">View All</a>
+            <h2 class="mb-4">Recent Applications</h2>
+            @* Place link at the bottom of its container with margin-top auto *@
+            <a class="fw-medium fs-5 view-all-link mt-auto" asp-controller="JobApplications" asp-action="Index">View All</a>
         </div>
         @if (!Model.Any())
         {
