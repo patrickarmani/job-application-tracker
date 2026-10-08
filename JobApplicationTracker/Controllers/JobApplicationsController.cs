@@ -13,7 +13,8 @@ namespace JobApplicationTracker.Controllers
 
         }
 
-        public IActionResult Index(string? searchTerm)
+        public IActionResult Index(string? searchTerm, ApplicationStatus? status)
+
         {
             var applications = _context.JobApplications.AsQueryable();
 
@@ -24,8 +25,11 @@ namespace JobApplicationTracker.Controllers
                     a.Company.ToLower().Contains(term) ||
                     a.Position.ToLower().Contains(term));
             }
-
-
+            if (status.HasValue)
+            {
+                applications = applications.Where(a => a.Status == status.Value);
+            }
+            ViewData["Status"] = status; // Store the selected status in ViewData to retain it in the view after a filter is applied
             ViewData["SearchTerm"] = searchTerm;// Store the search term in ViewData to retain it in the view after a search is performed   
             return View(applications.ToList()); // Convert the IQueryable to a List before passing it to the view
         }
