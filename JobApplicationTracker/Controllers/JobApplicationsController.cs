@@ -13,7 +13,8 @@ namespace JobApplicationTracker.Controllers
 
         }
 
-        public IActionResult Index(string? searchTerm, ApplicationStatus? status)
+        //public IActionResult Index(string? searchTerm, ApplicationStatus? status)
+        public IActionResult Index(string? searchTerm, ApplicationStatus? status, WorkModel? workModel, string? sortOrder)
 
         {
             var applications = _context.JobApplications.AsQueryable();
@@ -29,8 +30,25 @@ namespace JobApplicationTracker.Controllers
             {
                 applications = applications.Where(a => a.Status == status.Value);
             }
+
+            if (workModel.HasValue)
+            {
+                applications = applications.Where(a => a.WorkModel == workModel.Value);
+            }
+
+            applications = sortOrder switch
+            {
+                "date_asc" => applications.OrderBy(a => a.ApplicationDate),
+                _ => applications.OrderByDescending(a => a.ApplicationDate)
+            };
+
+
             ViewData["Status"] = status; // Store the selected status in ViewData to retain it in the view after a filter is applied
             ViewData["SearchTerm"] = searchTerm;// Store the search term in ViewData to retain it in the view after a search is performed   
+
+            ViewData["WorkModel"] = workModel;
+            ViewData["SortOrder"] = sortOrder;
+            
             return View(applications.ToList()); // Convert the IQueryable to a List before passing it to the view
         }
 

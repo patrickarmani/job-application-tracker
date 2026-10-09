@@ -26,6 +26,25 @@
             }
         </select>
 
+        <select name="workModel" class="border p-2" style="flex: 1; min-width: 150px;">
+            <option value="">All work models</option>
+            @foreach (var wm in Enum.GetValues<WorkModel>())
+            {
+                <option value="@wm" selected="@(Context.Request.Query["workModel"] == wm.ToString())">
+                    @wm
+                </option>
+            }
+        </select>
+
+        <select name="sortOrder" class="border p-2" style="flex: 1; min-width: 150px;">
+            <option value="date_desc" selected="@(Context.Request.Query["sortOrder"] != "date_asc")">
+                Newest first
+            </option>
+            <option value="date_asc" selected="@(Context.Request.Query["sortOrder"] == "date_asc")">
+                Oldest first
+            </option>
+        </select>
+
         <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Apply</button>
         <a asp-action="Index"
            class="form-action-button border-gray secondary-text fw-medium text-decoration-none d-inline-block py-2 px-3">
@@ -36,8 +55,10 @@
     
     @if (!Model.Any())
     {
-        var isFiltered = !string.IsNullOrEmpty(Context.Request.Query["searchTerm"])
-                         || !string.IsNullOrEmpty(Context.Request.Query["status"]);
+        var isFiltered = !string.IsNullOrWhiteSpace(Context.Request.Query["searchTerm"].ToString())
+                         || !string.IsNullOrEmpty(Context.Request.Query["status"].ToString())
+                         || !string.IsNullOrEmpty(Context.Request.Query["workModel"].ToString());
+
         <partial name="_EmptyState" model="isFiltered" />
     }
 
