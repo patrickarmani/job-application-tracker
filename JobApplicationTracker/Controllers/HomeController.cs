@@ -14,8 +14,29 @@ public class HomeController : Controller
     }
     public IActionResult Index()
     {
-        var applications = _context.JobApplications.ToList();
-        return View(applications);
+        var applicationsByStatus = _context.JobApplications
+            .GroupBy(a => a.Status)
+            .Select(g => new
+            {
+                Status = g.Key,
+                Count = g.Count()
+            })
+            .ToDictionary(x => x.Status, x => x.Count);
+
+        var recentApplications = _context.JobApplications
+            .OrderByDescending(a => a.ApplicationDate)
+            .ThenByDescending(a => a.Id)
+            .Take(5)
+            .ToList();
+
+        var dashboard = new DashboardViewModel
+        {
+            TotalApplications = _context.JobApplications.Count(),
+            ApplicationsByStatus = applicationsByStatus,
+            RecentApplications = recentApplications 
+        };
+
+        return View(dashboard);
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
