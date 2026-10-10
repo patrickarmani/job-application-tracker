@@ -8,6 +8,22 @@
   --background-color: #f8f9fa;
   --primary-color: #212529;
   --transparent: rgba(0, 0, 0, 0);
+  --badge-interview-color: #065d6a;
+  --badge-withdrawn-color: #6c757d;
+  /* Change bootstrap badge border radius */
+  --badge-border-radius: 0.50rem;
+}
+
+.badge {
+  border-radius: var(--badge-border-radius);
+}
+
+.badge-interview {
+  background-color: var(--badge-interview-color);
+}
+
+.badge-withdrawn {
+  background-color: var(--badge-withdrawn-color);
 }
 
 html {
@@ -38,8 +54,8 @@ body {
 .card-badge-text {
   background-color: var(--background-color);
   border: 1px solid var(--secondary-color);
-  border-radius: 0.75rem;
-  padding: 0.25rem 0.5rem;
+  border-radius: 0.50rem;
+  padding: 0.20rem;
   align-self: center;
 }
 
