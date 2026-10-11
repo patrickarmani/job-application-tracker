@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
 
         <p class="text-muted mb-0">You have @Model.TotalApplications application@(Model.TotalApplications != 1 ? "s" :
-                                                                                                        "")</p>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "")</p>
                     
             <a class="btn btn-primary py-1 px-2" asp-controller="JobApplications" asp-action="Create">+ New
                 application</a>
@@ -45,7 +45,7 @@
                         else
                         {
                             <div class="table-responsive border rounded table-border">
-                                <table class="table table-blue table-bordered mb-0">
+                                <table class="table table-blue table-bordered mb-0 align-middle">
                                     <thead class="">
                                         <tr>
                                             <th scope="col" class="text-center">Company</th>
@@ -61,16 +61,21 @@
                                             <tr>
                                                 <td class="text-center">@app.Company</td>
                                                 <td class="text-center">@app.Position</td>
-                                                <td class="text-center">@app.ApplicationDate.ToString("MMM d, yyyy", new
-                                                                                                                                                                    System.Globalization.CultureInfo("en-US"))</td>
-                                                    <td class="text-center">
-                                                        <partial name="_StatusBadge" model="app.Status"></partial>
-                                                        </td>
-                                                    </tr>
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                }
-                            </section>
-                        </div>
+                                                <td class="text-center">
+                                                    @app.ApplicationDate.ToString("MMM d, yyyy", new System.Globalization.CultureInfo("en-US"))
+                                                </td>
+                                                @* align items center vertically and horizontally *@
+                                                <td class="status-cell text-center">
+                                                    <span class="card-badge-text">
+                                                        <partial name="_StatusBadge" model="app.Status" />
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </section>
+                </div>
