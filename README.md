@@ -11,6 +11,9 @@ Built for CSE499 Senior Project.
 ## Features
 
 - **Dashboard**: total number of applications, a count per status, and a table of recent applications
+- **Search:** find applications by company name or position, including partial matches.
+- **Filters:** filter applications by status and work model, including combined filters.
+- **Sorting:** order applications by application date, from newest to oldest or oldest to newest.
 - **Applications list**: every application shown as a card with a color-coded status badge
 - **Add / edit**: one shared form for company, position, location, work model
   (on-site / hybrid / remote), date applied, status, job posting URL, and notes
@@ -19,14 +22,16 @@ Built for CSE499 Senior Project.
 
 ## Project status
 
-| Feature                                            | Status                      |
-| -------------------------------------------------- | --------------------------- |
-| Data model + database (SQLite, EF Core migrations) | ✅ Done                     |
-| Create, view, edit, delete applications            | ✅ Done                     |
-| Dashboard with status counts                       | ✅ Done                     |
-| Responsive layout (Bootstrap)                      | ✅ Done                     |
-| Search by company/position + filter by status      | 🚧 UI done, backend pending |
-| TODO: next planned features                        | ⬜ Not started              |
+| Feature                                            | Status         |
+| -------------------------------------------------- | -------------- |
+| Data model + database (SQLite, EF Core migrations) | ✅ Done        |
+| Create, view, edit, delete applications            | ✅ Done        |
+| Dashboard with status counts                       | ✅ Done        |
+| Responsive layout (Bootstrap)                      | ✅ Done        |
+| Search by company/position                         | ✅ Done        |
+| Filters by status and work model                   | ✅ Done        |
+| Sorting by application date                        | ✅ Done        |
+| TODO: next planned features                        | ⬜ Not started |
 
 ## CRUD workflow
 
@@ -49,6 +54,11 @@ The workflow uses ASP.NET Core MVC, Entity Framework Core, and SQLite for data p
 | [#29](https://github.com/patrickarmani/job-application-tracker/pull/29) | Editing job applications                                         | Patrick |
 | [#33](https://github.com/patrickarmani/job-application-tracker/pull/33) | Success and error feedback messages for create, edit, and delete | Patrick |
 | [#34](https://github.com/patrickarmani/job-application-tracker/pull/34) | Shared status badge partial for consistent status display        | Ovinson |
+| [#49](https://github.com/patrickarmani/job-application-tracker/pull/49) | Dashboard styling, status badge enhancements, logo, and favicon  | Ovinson |
+| [#46](https://github.com/patrickarmani/job-application-tracker/pull/46) | Application filtering and date sorting | Patrick |
+| [#47](https://github.com/patrickarmani/job-application-tracker/pull/47) | Dashboard statistics and recent applications | Patrick |
+| [#48](https://github.com/patrickarmani/job-application-tracker/pull/48) | Dashboard status badges and styling | Ovinson |
+| [#45](https://github.com/patrickarmani/job-application-tracker/pull/45) | Search by company name and position | Patrick |
 
 ## Tech stack
 
@@ -84,6 +94,8 @@ The application uses a consistent, responsive visual style based on Bootstrap 5.
 - **Forms and buttons:** consistent styling is used across Create, Edit, Details, and Delete views.
 - **Application cards:** applications use a consistent card layout for readability and quick status identification.
 - **Responsive design:** the interface is designed to work on both desktop and mobile screen sizes.
+- **Logo:** custom JobTracker branding displayed in the navigation bar and footer.
+- **Favicon:** custom application icon displayed in the browser tab.
 
 ## Teammates
 
