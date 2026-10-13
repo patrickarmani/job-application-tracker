@@ -88,8 +88,13 @@ body {
 @media (max-width: 575.98px) {
   .status-badge {
     width: 6rem;
-    padding: 0.35rem 0.5rem;
     font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-details {
+    margin-top: auto;
+    margin-bottom: auto;
   }
 }
 
