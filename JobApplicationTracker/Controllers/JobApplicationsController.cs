@@ -1,0 +1,176 @@
+using Microsoft.AspNetCore.Mvc;
+using JobApplicationTracker.Data;
+using JobApplicationTracker.Models;
+
+namespace JobApplicationTracker.Controllers
+{
+    public class JobApplicationsController : Controller
+    {
+        private readonly ApplicationDbContext _context;
+        public JobApplicationsController(ApplicationDbContext context)
+        {
+            _context = context;
+
+        }
+
+        //public IActionResult Index(string? searchTerm, ApplicationStatus? status)
+        public IActionResult Index(string? searchTerm, ApplicationStatus? status, WorkModel? workModel, string? sortOrder)
+
+        {
+            var applications = _context.JobApplications.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                var term = searchTerm.Trim().ToLower();
+                applications = applications.Where(a =>
+                    a.Company.ToLower().Contains(term) ||
+                    a.Position.ToLower().Contains(term));
+            }
+            if (status.HasValue)
+            {
+                applications = applications.Where(a => a.Status == status.Value);
+            }
+
+            if (workModel.HasValue)
+            {
+                applications = applications.Where(a => a.WorkModel == workModel.Value);
+            }
+
+            applications = sortOrder switch
+            {
+                "date_asc" => applications.OrderBy(a => a.ApplicationDate),
+                _ => applications.OrderByDescending(a => a.ApplicationDate)
+            };
+
+
+            ViewData["Status"] = status; // Store the selected status in ViewData to retain it in the view after a filter is applied
+            ViewData["SearchTerm"] = searchTerm;// Store the search term in ViewData to retain it in the view after a search is performed   
+
+            ViewData["WorkModel"] = workModel;
+            ViewData["SortOrder"] = sortOrder;
+            
+            return View(applications.ToList()); // Convert the IQueryable to a List before passing it to the view
+        }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var application = _context.JobApplications
+                .FirstOrDefault(a => a.Id == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+            return View(application);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var application = _context.JobApplications.Find(id);
+
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            return View(application);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, JobApplication application)
+        {
+            if (id != application.Id)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(application);
+            }
+
+            // Retrieve the existing application so only permitted fields are updated
+            var existingApplication = _context.JobApplications.Find(id);
+            if (existingApplication == null)
+            {
+                return NotFound();
+            }
+            // Update only the fields that are allowed to be changed    
+
+            existingApplication.Company = application.Company;
+            existingApplication.Position = application.Position;
+            existingApplication.Location = application.Location;
+            existingApplication.ApplicationDate = application.ApplicationDate;
+            existingApplication.Status = application.Status;
+            existingApplication.WorkModel = application.WorkModel;
+            existingApplication.JobUrl = application.JobUrl;
+            existingApplication.Notes = application.Notes;
+
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = $"Application \"{application.Company}\" updated successfully."; // Set a success message in TempData to display after redirect
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        public IActionResult Create() => View();
+        [HttpPost]
+        public IActionResult Create(JobApplication application)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(application);
+            }
+            _context.JobApplications.Add(application);
+            _context.SaveChanges();
+
+
+            TempData["SuccessMessage"] = $"Application \"{application.Company}\" created successfully."; // Set a success message in TempData to display after redirect  
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var application = _context.JobApplications.FirstOrDefault(a => a.Id == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+            return View(application);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var application = _context.JobApplications.FirstOrDefault(a => a.Id == id);
+            if (application == null)
+            {
+                return NotFound();
+            }
+            _context.JobApplications.Remove(application);
+            _context.SaveChanges();
+
+            TempData["SuccessMessage"] = $"Application \"{application.Company}\" deleted successfully."; // Set a success message in TempData to display after redirect> The message includes the company name of the deleted application for better user feedback.
+            return RedirectToAction(nameof(Index));
+        }
+
+    }
+
+}

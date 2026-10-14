@@ -1,0 +1,12 @@
+@model ApplicationStatus
+
+<span class="badge status-badge fw-normal @(Model switch
+      {
+            ApplicationStatus.Applied => "bg-primary",
+      @* change interview badge color to make good contrast with text, use this *@
+            ApplicationStatus.Interview => "badge-interview",
+            ApplicationStatus.Offer => "bg-success",
+            ApplicationStatus.Rejected => "bg-danger",
+            ApplicationStatus.Withdrawn => "badge-withdrawn",
+            _ => "bg-secondary"
+      })">@Model</span>

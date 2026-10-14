@@ -1,0 +1,108 @@
+@{
+    ViewData["Title"] = "Job Applications";
+}
+
+@model IEnumerable<JobApplicationTracker.Models.JobApplication>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div>
+    <h1 class="display-5 secondary-text fw-medium">Applications</h1>
+    @* Search by company/position and filter by status, submitted together *@
+    <form method="get" action="" class="d-flex flex-wrap gap-2 mb-5" style="max-width: 700px;">
+        <input type="text" name="searchTerm" placeholder="Search by company or position" class="border p-2"
+               style="flex: 2; min-width: 200px;" value="@Context.Request.Query["searchTerm"]" />
+
+        <select name="status" class="border p-2" style="flex: 1; min-width: 150px;">
+            <option value="">All statuses</option>
+            @foreach (var s in Enum.GetValues<ApplicationStatus>())
+            {
+                <option value="@s" selected="@(Context.Request.Query["status"] == s.ToString())">@s</option>
+            }
+        </select>
+
+        <select name="workModel" class="border p-2" style="flex: 1; min-width: 150px;">
+            <option value="">All work models</option>
+            @foreach (var wm in Enum.GetValues<WorkModel>())
+            {
+                <option value="@wm" selected="@(Context.Request.Query["workModel"] == wm.ToString())">
+                    @wm
+                </option>
+            }
+        </select>
+
+        <select name="sortOrder" class="border p-2" style="flex: 1; min-width: 150px;">
+            <option value="date_desc" selected="@(Context.Request.Query["sortOrder"] != "date_asc")">
+                Newest first
+            </option>
+            <option value="date_asc" selected="@(Context.Request.Query["sortOrder"] == "date_asc")">
+                Oldest first
+            </option>
+        </select>
+
+        <button type="submit" class="form-action-button border-gray secondary-text fw-medium">Apply</button>
+        <a asp-action="Index"
+           class="form-action-button border-gray secondary-text fw-medium text-decoration-none d-inline-block py-2 px-3">
+            Clear
+        </a>
+
+    </form>
+    
+    @if (!Model.Any())
+    {
+        var isFiltered = !string.IsNullOrWhiteSpace(Context.Request.Query["searchTerm"].ToString())
+                         || !string.IsNullOrEmpty(Context.Request.Query["status"].ToString())
+                         || !string.IsNullOrEmpty(Context.Request.Query["workModel"].ToString());
+
+        <partial name="_EmptyState" model="isFiltered" />
+    }
+
+    else
+    {
+        <div class="position-relative">
+            <a class="btn btn-primary position-absolute" style="top: -45px; right: 0;" asp-controller="JobApplications"
+               asp-action="Create">+ New
+                application</a>
+                @* Apply flex layout and spacing with justified content and between items *@
+                <article class="d-flex flex-column gap-3">
+                    @foreach (var app in Model)
+                    {
+                        <div class="d-flex justify-content-between gap-3 application-card">
+                            <div class="d-flex flex-column">
+                                <h2 class="fw-medium mb-2 secondary-text underlined-text">@app.Company</h2>
+                                @* Center div vertically within its parent *@
+                                <div class="card-details">
+                                    <p class="fw-bold mb-0">Position: <span class="fw-normal">@app.Position</span>
+                                    </p>
+                                    <p class="fw-bold mb-0">Date Applied: <span
+                                        class="fw-normal">@app.ApplicationDate.ToShortDateString()</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <div class="d-flex flex-column gap-2 flex-grow-1">
+                                    @* Make this span shrink to fit its content *@
+                                    <div class="mb-auto align-self-center fs-5">
+                                        <partial name="_StatusBadge" model="app.Status" />
+                                    </div>
+                                    <div class="d-flex flex-column flex-sm-row gap-2">
+                                        <a asp-action="Details" asp-route-id="@app.Id"
+                                           class="btn btn-sm btn-outline-secondary">View</a>
+                                        <a asp-action="Edit" asp-route-id="@app.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                        <a asp-action="Delete" asp-route-id="@app.Id"
+                                           class="btn btn-sm btn-outline-danger">Delete</a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </article>
+            </div>
+        }
+    </div>

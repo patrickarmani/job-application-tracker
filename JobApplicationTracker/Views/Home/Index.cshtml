@@ -1,8 +1,81 @@
-﻿@{
+﻿@model JobApplicationTracker.Models.DashboardViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<div class="">
+    <h1 class="display-6 secondary-text fw-medium mb-0">Dashboard - Welcome</h1>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <p class="text-muted mb-0">You have @Model.TotalApplications application@(Model.TotalApplications != 1 ? "s" :
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                "")</p>
+                    
+            <a class="btn btn-primary py-1 px-2" asp-controller="JobApplications" asp-action="Create">+ New
+                application</a>
+            </div>
+            <section class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 mb-4">
+                @* Instead of creating a card for each application, we create a card for each application status *@
+                @foreach (var status in Enum.GetValues<ApplicationStatus>())
+                {
+                    var count = Model.ApplicationsByStatus.GetValueOrDefault(status);
+                    <div>
+                        <div class="dashboard-card w-100 h-100 text-center p-2">
+                            <span class="card-badge-text">
+                                <partial name="_StatusBadge" model="status"></partial>
+                                </span>
+                                <span class="fw-bold fs-4">@count</span>
+                                <span>Application@(count != 1 ? "s" : "")</span>
+                            </div>
+                        </div>
+                    }
+
+                </section>
+                <section class="mt-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 class="mb-4">Recent Applications</h2>
+                        @* Place link at the bottom of its container with margin-top auto *@
+                        <a class="fw-medium fs-5 view-all-link mt-auto" asp-controller="JobApplications" asp-action="Index">View
+                            All</a>
+                        </div>
+                        @if (!Model.RecentApplications.Any())
+                        {
+                            <p class="text-muted">No recent applications.</p>
+                        }
+                        else
+                        {
+                            <div class="table-responsive border rounded table-border">
+                                <table class="table table-blue table-bordered mb-0 align-middle">
+                                    <thead class="">
+                                        <tr>
+                                            <th scope="col" class="text-center">Company</th>
+                                            <th scope="col" class="text-center">Position</th>
+                                            <th scope="col" class="text-center">Applied</th>
+                                            <th scope="col" class="text-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    @* Shows the most recent applications provided by the controller *@
+                                    <tbody>
+                                        @foreach (var app in Model.RecentApplications)
+                                        {
+                                            <tr>
+                                                <td class="text-center">@app.Company</td>
+                                                <td class="text-center">@app.Position</td>
+                                                <td class="text-center">
+                                                    @app.ApplicationDate.ToString("MMM d, yyyy", new System.Globalization.CultureInfo("en-US"))
+                                                </td>
+                                                @* align items center vertically and horizontally *@
+                                                <td class="status-cell text-center">
+                                                    <span class="card-badge-text">
+                                                        <partial name="_StatusBadge" model="app.Status" />
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </section>
+                </div>
